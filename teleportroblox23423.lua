@@ -3,6 +3,7 @@ local MainFrame = Instance.new("Frame")
 local Title = Instance.new("TextLabel")
 local TextBox = Instance.new("TextBox")
 local ToggleBtn = Instance.new("TextButton")
+local CloseBtn = Instance.new("TextButton")
 
 local DropdownBtn = Instance.new("TextButton")
 local DropdownFrame = Instance.new("ScrollingFrame")
@@ -26,6 +27,15 @@ Title.Size = UDim2.new(1, 0, 0, 30)
 Title.Text = "RMT Auto-Drop System"
 Title.TextColor3 = Color3.fromRGB(255, 255, 255)
 Title.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+
+CloseBtn.Parent = MainFrame
+CloseBtn.Size = UDim2.new(0, 30, 0, 30)
+CloseBtn.Position = UDim2.new(1, -30, 0, 0)
+CloseBtn.BackgroundColor3 = Color3.fromRGB(180, 40, 40)
+CloseBtn.Text = "X"
+CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseBtn.Font = Enum.Font.SourceSansBold
+CloseBtn.TextSize = 18
 
 TextBox.Parent = MainFrame
 TextBox.Position = UDim2.new(0.05, 0, 0.15, 0)
@@ -139,7 +149,8 @@ localPlayer.CharacterAdded:Connect(function(character)
     hasCountedThisLife = false
 end)
 
-runService.Heartbeat:Connect(function()
+local connection
+connection = runService.Heartbeat:Connect(function()
     if not isActive then return end
     
     if respawnLimit > 0 and respawnCount >= respawnLimit then
@@ -179,11 +190,16 @@ ToggleBtn.MouseButton1Click:Connect(function()
         respawnCount = 0
         respawnLimit = tonumber(LimitBox.Text) or 0
         CounterLabel.Text = "Progress: 0 / " .. tostring(respawnLimit)
-        
         ToggleBtn.Text = "ON"
         ToggleBtn.BackgroundColor3 = Color3.fromRGB(50, 200, 50)
     else
         ToggleBtn.Text = "OFF"
         ToggleBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
     end
+end)
+
+CloseBtn.MouseButton1Click:Connect(function()
+    isActive = false
+    if connection then connection:Disconnect() end
+    ScreenGui:Destroy()
 end)
