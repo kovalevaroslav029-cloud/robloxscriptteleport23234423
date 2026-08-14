@@ -16,8 +16,8 @@ ScreenGui.ResetOnSpawn = false
 MainFrame.Name = "MainFrame"
 MainFrame.Parent = ScreenGui
 MainFrame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-MainFrame.Position = UDim2.new(0.5, -110, 0.5, -125)
-MainFrame.Size = UDim2.new(0, 220, 0, 250)
+MainFrame.Position = UDim2.new(0.5, -110, 0.5, -140)
+MainFrame.Size = UDim2.new(0, 220, 0, 280)
 MainFrame.Active = true
 MainFrame.Draggable = true 
 
@@ -65,7 +65,7 @@ CounterLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
 CounterLabel.BackgroundTransparency = 1
 
 ToggleBtn.Parent = MainFrame
-ToggleBtn.Position = UDim2.new(0.05, 0, 0.72, 0)
+ToggleBtn.Position = UDim2.new(0.05, 0, 0.75, 0)
 ToggleBtn.Size = UDim2.new(0.9, 0, 0, 40)
 ToggleBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
 ToggleBtn.Text = "OFF"
@@ -123,14 +123,14 @@ DropdownBtn.MouseButton1Click:Connect(function()
         updateDropdown() 
         LimitBox.Position = UDim2.new(0.05, 0, 0.75, 0)
         CounterLabel.Position = UDim2.new(0.05, 0, 0.86, 0)
-        MainFrame.Size = UDim2.new(0, 220, 0, 320)
+        MainFrame.Size = UDim2.new(0, 220, 0, 350)
         ToggleBtn.Position = UDim2.new(0.05, 0, 0.85, 0)
         ToggleBtn.Visible = false
     else
         LimitBox.Position = UDim2.new(0.05, 0, 0.45, 0)
         CounterLabel.Position = UDim2.new(0.05, 0, 0.58, 0)
-        MainFrame.Size = UDim2.new(0, 220, 0, 250)
-        ToggleBtn.Position = UDim2.new(0.05, 0, 0.72, 0)
+        MainFrame.Size = UDim2.new(0, 220, 0, 280)
+        ToggleBtn.Position = UDim2.new(0.05, 0, 0.75, 0)
         ToggleBtn.Visible = true
     end
 end)
