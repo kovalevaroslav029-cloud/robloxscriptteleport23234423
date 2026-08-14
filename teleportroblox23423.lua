@@ -38,20 +38,20 @@ CloseBtn.Font = Enum.Font.SourceSansBold
 CloseBtn.TextSize = 18
 
 TextBox.Parent = MainFrame
-TextBox.Position = UDim2.new(0.05, 0, 0.15, 0)
+TextBox.Position = UDim2.new(0.05, 0, 0.13, 0)
 TextBox.Size = UDim2.new(0.9, 0, 0, 25)
 TextBox.PlaceholderText = "Type Username Manually"
 TextBox.Text = ""
 
 DropdownBtn.Parent = MainFrame
-DropdownBtn.Position = UDim2.new(0.05, 0, 0.28, 0)
+DropdownBtn.Position = UDim2.new(0.05, 0, 0.24, 0)
 DropdownBtn.Size = UDim2.new(0.9, 0, 0, 25)
 DropdownBtn.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 DropdownBtn.Text = "Select Player from List v"
 DropdownBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 
 DropdownFrame.Parent = MainFrame
-DropdownFrame.Position = UDim2.new(0.05, 0, 0.40, 0)
+DropdownFrame.Position = UDim2.new(0.05, 0, 0.34, 0)
 DropdownFrame.Size = UDim2.new(0.9, 0, 0, 80)
 DropdownFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
 DropdownFrame.Visible = false
@@ -121,6 +121,7 @@ local function updateDropdown()
             pBtn.MouseButton1Click:Connect(function()
                 TextBox.Text = p.Name
                 DropdownFrame.Visible = false
+                DropdownBtn.MouseButton1Click:Fire()
             end)
         end
     end
@@ -131,17 +132,15 @@ DropdownBtn.MouseButton1Click:Connect(function()
     DropdownFrame.Visible = not DropdownFrame.Visible
     if DropdownFrame.Visible then 
         updateDropdown() 
-        LimitBox.Position = UDim2.new(0.05, 0, 0.75, 0)
-        CounterLabel.Position = UDim2.new(0.05, 0, 0.86, 0)
-        MainFrame.Size = UDim2.new(0, 220, 0, 350)
-        ToggleBtn.Position = UDim2.new(0.05, 0, 0.85, 0)
-        ToggleBtn.Visible = false
+        LimitBox.Position = UDim2.new(0.05, 0, 0.65, 0)
+        CounterLabel.Position = UDim2.new(0.05, 0, 0.75, 0)
+        MainFrame.Size = UDim2.new(0, 220, 0, 360)
+        ToggleBtn.Position = UDim2.new(0.05, 0, 0.83, 0)
     else
         LimitBox.Position = UDim2.new(0.05, 0, 0.45, 0)
         CounterLabel.Position = UDim2.new(0.05, 0, 0.58, 0)
         MainFrame.Size = UDim2.new(0, 220, 0, 280)
         ToggleBtn.Position = UDim2.new(0.05, 0, 0.75, 0)
-        ToggleBtn.Visible = true
     end
 end)
 
