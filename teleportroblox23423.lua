@@ -1,15 +1,18 @@
 local ScreenGui = Instance.new("ScreenGui")
 local MainFrame = Instance.new("Frame")
 local Title = Instance.new("TextLabel")
-local TextBox = Instance.new("TextBox")
-local ToggleBtn = Instance.new("TextButton")
 local CloseBtn = Instance.new("TextButton")
 
+local ContentFrame = Instance.new("Frame")
+local UIList = Instance.new("UIListLayout")
+
+local TextBox = Instance.new("TextBox")
 local DropdownBtn = Instance.new("TextButton")
 local DropdownFrame = Instance.new("ScrollingFrame")
 local DropdownLayout = Instance.new("UIListLayout")
 local LimitBox = Instance.new("TextBox")
 local CounterLabel = Instance.new("TextLabel")
+local ToggleBtn = Instance.new("TextButton")
 
 ScreenGui.Parent = game:GetService("CoreGui")
 ScreenGui.ResetOnSpawn = false
@@ -17,8 +20,8 @@ ScreenGui.ResetOnSpawn = false
 MainFrame.Name = "MainFrame"
 MainFrame.Parent = ScreenGui
 MainFrame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-MainFrame.Position = UDim2.new(0.5, -110, 0.5, -140)
-MainFrame.Size = UDim2.new(0, 220, 0, 280)
+MainFrame.Position = UDim2.new(0.5, -110, 0.5, -180)
+MainFrame.Size = UDim2.new(0, 220, 0, 360)
 MainFrame.Active = true
 MainFrame.Draggable = true 
 
@@ -37,49 +40,59 @@ CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 CloseBtn.Font = Enum.Font.SourceSansBold
 CloseBtn.TextSize = 18
 
-TextBox.Parent = MainFrame
-TextBox.Position = UDim2.new(0.05, 0, 0.13, 0)
+ContentFrame.Parent = MainFrame
+ContentFrame.Position = UDim2.new(0, 0, 0, 35)
+ContentFrame.Size = UDim2.new(1, 0, 1, -35)
+ContentFrame.BackgroundTransparency = 1
+
+UIList.Parent = ContentFrame
+UIList.SortOrder = Enum.SortOrder.LayoutOrder
+UIList.Padding = UDim.new(0, 8)
+UIList.HorizontalAlignment = Enum.HorizontalAlignment.Center
+
+TextBox.Parent = ContentFrame
 TextBox.Size = UDim2.new(0.9, 0, 0, 25)
 TextBox.PlaceholderText = "Type Username Manually"
 TextBox.Text = ""
+TextBox.LayoutOrder = 1
 
-DropdownBtn.Parent = MainFrame
-DropdownBtn.Position = UDim2.new(0.05, 0, 0.24, 0)
+DropdownBtn.Parent = ContentFrame
 DropdownBtn.Size = UDim2.new(0.9, 0, 0, 25)
 DropdownBtn.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 DropdownBtn.Text = "Select Player from List v"
 DropdownBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+DropdownBtn.LayoutOrder = 2
 
-DropdownFrame.Parent = MainFrame
-DropdownFrame.Position = UDim2.new(0.05, 0, 0.34, 0)
+DropdownFrame.Parent = ContentFrame
 DropdownFrame.Size = UDim2.new(0.9, 0, 0, 80)
 DropdownFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
 DropdownFrame.Visible = false
 DropdownFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
 DropdownFrame.ScrollBarThickness = 6
+DropdownFrame.LayoutOrder = 3
 
 DropdownLayout.Parent = DropdownFrame
 DropdownLayout.SortOrder = Enum.SortOrder.LayoutOrder
 
-LimitBox.Parent = MainFrame
-LimitBox.Position = UDim2.new(0.05, 0, 0.45, 0)
+LimitBox.Parent = ContentFrame
 LimitBox.Size = UDim2.new(0.9, 0, 0, 25)
 LimitBox.PlaceholderText = "Limit Respawns (e.g. 50)"
 LimitBox.Text = ""
+LimitBox.LayoutOrder = 4
 
-CounterLabel.Parent = MainFrame
-CounterLabel.Position = UDim2.new(0.05, 0, 0.58, 0)
+CounterLabel.Parent = ContentFrame
 CounterLabel.Size = UDim2.new(0.9, 0, 0, 20)
 CounterLabel.Text = "Progress: 0 / 0"
 CounterLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
 CounterLabel.BackgroundTransparency = 1
+CounterLabel.LayoutOrder = 5
 
-ToggleBtn.Parent = MainFrame
-ToggleBtn.Position = UDim2.new(0.05, 0, 0.75, 0)
+ToggleBtn.Parent = ContentFrame
 ToggleBtn.Size = UDim2.new(0.9, 0, 0, 40)
 ToggleBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
 ToggleBtn.Text = "OFF"
 ToggleBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleBtn.LayoutOrder = 6
 
 local players = game:GetService("Players")
 local runService = game:GetService("RunService")
@@ -121,7 +134,6 @@ local function updateDropdown()
             pBtn.MouseButton1Click:Connect(function()
                 TextBox.Text = p.Name
                 DropdownFrame.Visible = false
-                DropdownBtn.MouseButton1Click:Fire()
             end)
         end
     end
@@ -132,15 +144,6 @@ DropdownBtn.MouseButton1Click:Connect(function()
     DropdownFrame.Visible = not DropdownFrame.Visible
     if DropdownFrame.Visible then 
         updateDropdown() 
-        LimitBox.Position = UDim2.new(0.05, 0, 0.65, 0)
-        CounterLabel.Position = UDim2.new(0.05, 0, 0.75, 0)
-        MainFrame.Size = UDim2.new(0, 220, 0, 360)
-        ToggleBtn.Position = UDim2.new(0.05, 0, 0.83, 0)
-    else
-        LimitBox.Position = UDim2.new(0.05, 0, 0.45, 0)
-        CounterLabel.Position = UDim2.new(0.05, 0, 0.58, 0)
-        MainFrame.Size = UDim2.new(0, 220, 0, 280)
-        ToggleBtn.Position = UDim2.new(0.05, 0, 0.75, 0)
     end
 end)
 
