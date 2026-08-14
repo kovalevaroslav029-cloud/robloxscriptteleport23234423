@@ -4,7 +4,6 @@ local Title = Instance.new("TextLabel")
 local TextBox = Instance.new("TextBox")
 local ToggleBtn = Instance.new("TextButton")
 
--- Настройка GUI (Появится в центре экрана)
 ScreenGui.Parent = game:GetService("CoreGui")
 ScreenGui.ResetOnSpawn = false
 
@@ -14,7 +13,7 @@ MainFrame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
 MainFrame.Position = UDim2.new(0.5, -100, 0.5, -75)
 MainFrame.Size = UDim2.new(0, 200, 0, 150)
 MainFrame.Active = true
-MainFrame.Draggable = true -- Окно можно двигать мышкой
+MainFrame.Draggable = true 
 
 Title.Parent = MainFrame
 Title.Size = UDim2.new(1, 0, 0, 30)
@@ -25,26 +24,23 @@ Title.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 TextBox.Parent = MainFrame
 TextBox.Position = UDim2.new(0.05, 0, 0.3, 0)
 TextBox.Size = UDim2.new(0.9, 0, 0, 30)
-TextBox.PlaceholderText = "Ник игрока (Частично)"
+TextBox.PlaceholderText = "Target name (Partial)"
 TextBox.Text = ""
 
 ToggleBtn.Parent = MainFrame
 ToggleBtn.Position = UDim2.new(0.05, 0, 0.6, 0)
 ToggleBtn.Size = UDim2.new(0.9, 0, 0, 40)
 ToggleBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
-ToggleBtn.Text = "ВЫКЛ"
+ToggleBtn.Text = "OFF"
 ToggleBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 
--- Логика плавной работы и авто-респавна
 local players = game:GetService("Players")
 local runService = game:GetService("RunService")
 local localPlayer = players.LocalPlayer
 local isActive = false
 
--- Скорость подлета (чем меньше число, тем медленнее и незаметнее для античита)
 local FLY_SPEED = 0.05 
 
--- Поиск игрока по части никнейма
 local function findTarget()
     local text = TextBox.Text:lower()
     if text == "" then return nil end
@@ -56,7 +52,6 @@ local function findTarget()
     return nil
 end
 
--- Основной цикл перемещения
 runService.Heartbeat:Connect(function()
     if not isActive then return end
     
@@ -69,16 +64,24 @@ runService.Heartbeat:Connect(function()
     local myHumanoid = localPlayer.Character:FindFirstChild("Humanoid")
     
     if myHumanoid and myHumanoid.Health > 0 then
-        -- Вычисляем дистанцию до цели
         local distance = (myRoot.Position - targetRoot.Position).Magnitude
         
         if distance > 4 then
-            -- Плавно летим к игроку (CFrame Lerp)
             myRoot.CFrame = myRoot.CFrame:Lerp(targetRoot.CFrame * CFrame.new(0, 2, 3), FLY_SPEED)
         else
-            -- Если подлетели вплотную, отправляем персонажа на респавн
             myHumanoid.Health = 0
-            task.wait(1) -- Защита от спама респавном
+            task.wait(1) 
         end
+    end
+end)
+
+ToggleBtn.MouseButton1Click:Connect(function()
+    isActive = not isActive
+    if isActive then
+        ToggleBtn.Text = "ON"
+        ToggleBtn.BackgroundColor3 = Color3.fromRGB(50, 200, 50)
+    else
+        ToggleBtn.Text = "OFF"
+        ToggleBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
     end
 end)
