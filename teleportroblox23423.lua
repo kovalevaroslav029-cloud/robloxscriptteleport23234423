@@ -2,9 +2,7 @@ local ScreenGui = Instance.new("ScreenGui")
 local MainFrame = Instance.new("Frame")
 local Title = Instance.new("TextLabel")
 local CloseBtn = Instance.new("TextButton")
-
-local ContentFrame = Instance.new("Frame")
-local UIList = Instance.new("UIListLayout")
+local ToggleBtn = Instance.new("TextButton")
 
 local TextBox = Instance.new("TextBox")
 local DropdownBtn = Instance.new("TextButton")
@@ -12,7 +10,6 @@ local DropdownFrame = Instance.new("ScrollingFrame")
 local DropdownLayout = Instance.new("UIListLayout")
 local LimitBox = Instance.new("TextBox")
 local CounterLabel = Instance.new("TextLabel")
-local ToggleBtn = Instance.new("TextButton")
 
 ScreenGui.Parent = game:GetService("CoreGui")
 ScreenGui.ResetOnSpawn = false
@@ -20,16 +17,27 @@ ScreenGui.ResetOnSpawn = false
 MainFrame.Name = "MainFrame"
 MainFrame.Parent = ScreenGui
 MainFrame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-MainFrame.Position = UDim2.new(0.5, -110, 0.5, -180)
-MainFrame.Size = UDim2.new(0, 220, 0, 360)
+MainFrame.Position = UDim2.new(0.5, -110, 0.5, -100)
+MainFrame.Size = UDim2.new(0, 220, 0, 200)
 MainFrame.Active = true
 MainFrame.Draggable = true 
 
 Title.Parent = MainFrame
-Title.Size = UDim2.new(1, 0, 0, 30)
-Title.Text = "RMT Auto-Drop System"
+Title.Size = UDim2.new(1, -70, 0, 30)
+Title.Position = UDim2.new(0, 5, 0, 0)
+Title.Text = "RMT Drop"
 Title.TextColor3 = Color3.fromRGB(255, 255, 255)
 Title.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+Title.TextXAlignment = Enum.TextXAlignment.Left
+
+ToggleBtn.Parent = MainFrame
+ToggleBtn.Size = UDim2.new(0, 35, 0, 30)
+ToggleBtn.Position = UDim2.new(1, -65, 0, 0)
+ToggleBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+ToggleBtn.Text = "OFF"
+ToggleBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleBtn.Font = Enum.Font.SourceSansBold
+ToggleBtn.TextSize = 14
 
 CloseBtn.Parent = MainFrame
 CloseBtn.Size = UDim2.new(0, 30, 0, 30)
@@ -38,61 +46,45 @@ CloseBtn.BackgroundColor3 = Color3.fromRGB(180, 40, 40)
 CloseBtn.Text = "X"
 CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 CloseBtn.Font = Enum.Font.SourceSansBold
-CloseBtn.TextSize = 18
+CloseBtn.TextSize = 16
 
-ContentFrame.Parent = MainFrame
-ContentFrame.Position = UDim2.new(0, 0, 0, 35)
-ContentFrame.Size = UDim2.new(1, 0, 1, -35)
-ContentFrame.BackgroundTransparency = 1
-
-UIList.Parent = ContentFrame
-UIList.SortOrder = Enum.SortOrder.LayoutOrder
-UIList.Padding = UDim.new(0, 8)
-UIList.HorizontalAlignment = Enum.HorizontalAlignment.Center
-
-TextBox.Parent = ContentFrame
+TextBox.Parent = MainFrame
+TextBox.Position = UDim2.new(0.05, 0, 0.22, 0)
 TextBox.Size = UDim2.new(0.9, 0, 0, 25)
 TextBox.PlaceholderText = "Type Username Manually"
 TextBox.Text = ""
-TextBox.LayoutOrder = 1
 
-DropdownBtn.Parent = ContentFrame
+DropdownBtn.Parent = MainFrame
+DropdownBtn.Position = UDim2.new(0.05, 0, 0.38, 0)
 DropdownBtn.Size = UDim2.new(0.9, 0, 0, 25)
 DropdownBtn.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 DropdownBtn.Text = "Select Player from List v"
 DropdownBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-DropdownBtn.LayoutOrder = 2
 
-DropdownFrame.Parent = ContentFrame
+DropdownFrame.Parent = MainFrame
+DropdownFrame.Position = UDim2.new(0.05, 0, 0.52, 0)
 DropdownFrame.Size = UDim2.new(0.9, 0, 0, 80)
 DropdownFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
 DropdownFrame.Visible = false
 DropdownFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
 DropdownFrame.ScrollBarThickness = 6
-DropdownFrame.LayoutOrder = 3
+DropdownFrame.ZIndex = 5
 
 DropdownLayout.Parent = DropdownFrame
 DropdownLayout.SortOrder = Enum.SortOrder.LayoutOrder
 
-LimitBox.Parent = ContentFrame
+LimitBox.Parent = MainFrame
+LimitBox.Position = UDim2.new(0.05, 0, 0.55, 0)
 LimitBox.Size = UDim2.new(0.9, 0, 0, 25)
 LimitBox.PlaceholderText = "Limit Respawns (e.g. 50)"
 LimitBox.Text = ""
-LimitBox.LayoutOrder = 4
 
-CounterLabel.Parent = ContentFrame
+CounterLabel.Parent = MainFrame
+CounterLabel.Position = UDim2.new(0.05, 0, 0.72, 0)
 CounterLabel.Size = UDim2.new(0.9, 0, 0, 20)
 CounterLabel.Text = "Progress: 0 / 0"
 CounterLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
 CounterLabel.BackgroundTransparency = 1
-CounterLabel.LayoutOrder = 5
-
-ToggleBtn.Parent = ContentFrame
-ToggleBtn.Size = UDim2.new(0.9, 0, 0, 40)
-ToggleBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
-ToggleBtn.Text = "OFF"
-ToggleBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-ToggleBtn.LayoutOrder = 6
 
 local players = game:GetService("Players")
 local runService = game:GetService("RunService")
@@ -130,10 +122,13 @@ local function updateDropdown()
             pBtn.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
             pBtn.Text = p.Name
             pBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+            pBtn.ZIndex = 6
             
             pBtn.MouseButton1Click:Connect(function()
                 TextBox.Text = p.Name
                 DropdownFrame.Visible = false
+                LimitBox.Visible = true
+                CounterLabel.Visible = true
             end)
         end
     end
@@ -144,6 +139,11 @@ DropdownBtn.MouseButton1Click:Connect(function()
     DropdownFrame.Visible = not DropdownFrame.Visible
     if DropdownFrame.Visible then 
         updateDropdown() 
+        LimitBox.Visible = false
+        CounterLabel.Visible = false
+    else
+        LimitBox.Visible = true
+        CounterLabel.Visible = true
     end
 end)
 
